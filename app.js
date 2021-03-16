@@ -18,6 +18,8 @@ const app = express();
 
 // Массив разешённых доменов
 const allowedCors = [
+  'https://artmovies.students.nomoredomains.icu',
+  'http://www.artmovies.students.nomoredomains.icu',
   'localhost:3001',
 ];
 
