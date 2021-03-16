@@ -4,6 +4,8 @@ const {
   updateUser, getCurrentUser,
 } = require('../controllers/users');
 
+module.exports = routerUser;
+
 // возвращает информацию о пользователе (email и имя)
 routerUser.get('/me', getCurrentUser);
 

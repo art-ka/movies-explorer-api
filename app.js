@@ -1,6 +1,5 @@
 const express = require('express');
 const mongoose = require('mongoose');
-const bodyParser = require('body-parser');
 const cors = require('cors');
 const { errors } = require('celebrate');
 const { celebrate, Joi } = require('celebrate');
@@ -41,7 +40,7 @@ mongoose.connect('mongodb://localhost:27017/bitfilmsdb', {
   useUnifiedTopology: true,
 });
 
-app.use(bodyParser.json());
+app.use(express.json());
 
 app.use(requestLogger); // подключаем логгер запросов
 

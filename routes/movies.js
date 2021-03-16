@@ -4,6 +4,8 @@ const {
   getMovie, createMovie, deleteMovie,
 } = require('../controllers/movies');
 
+module.exports = routerMovie;
+
 const validateMovieID = celebrate({
   params: Joi.object().keys({
     movieId: Joi.string().required().length(24),

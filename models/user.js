@@ -26,7 +26,8 @@ const userSchema = new mongoose.Schema({
   },
 });
 
-function findUserByCredentials(email, password) {
+// eslint-disable-next-line func-names
+userSchema.statics.findUserByCredentials = function (email, password) {
   // попытаемся найти пользовател по почте
   const errorMessage = 'Неправильные почта или пароль';
 
@@ -50,8 +51,6 @@ function findUserByCredentials(email, password) {
           return user;
         });
     });
-}
-
-userSchema.statics.findUserByCredentials = findUserByCredentials();
+};
 
 module.exports = mongoose.model('user', userSchema);
