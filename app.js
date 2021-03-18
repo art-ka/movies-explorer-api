@@ -10,6 +10,7 @@ const auth = require('./middlewares/auth');
 const { requestLogger, errorLogger } = require('./middlewares/logger');
 require('dotenv').config();
 const { NotFound } = require('./errors');
+const limiter = require('./middlewares/limiter');
 
 const errorHandler = require('./middlewares/errorHandler');
 
@@ -17,6 +18,7 @@ const { DB_URL, PORT = 3000 } = process.env;
 
 const app = express();
 app.use(helmet());
+app.use(limiter);
 
 // Массив разешённых доменов
 const allowedCors = [
