@@ -5,8 +5,8 @@
   "main": "app.js",
   "scripts": {
     "start": "node app.js",
-    "dev": "process.env.NODE_ENV !== 'production'; nodemon app.js",
-    "debug": "node --inspect-brk app.js"
+    "dev": "NODE_ENV=development nodemon app.js",
+    "debug": "NODE_ENV=development node --inspect-brk app.js"
   },
   "keywords": [],
   "author": "Novikova Ekaterina",

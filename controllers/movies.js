@@ -15,14 +15,15 @@ const createMovie = (req, res, next) => {
     .then((movie) => res.status(200).send(movie))
     .catch((err) => {
       if (err.name === 'ValidationError') {
-        throw new BadRequest('Произошла ошибка валидации');
+        return next(new BadRequest('Произошла ошибка валидации'));
       }
-      next(err);
+      return next(err);
     });
 };
 
 const deleteMovie = (req, res, next) => {
   const owner = req.user._id;
+  console.log(req.params);
   Movie.findById(req.params.movieId)
     .then((movie) => {
       if (!movie) {
@@ -36,9 +37,9 @@ const deleteMovie = (req, res, next) => {
     })
     .catch((err) => {
       if (err.name === 'CastError') {
-        throw new BadRequest('Произошла ошибка валидации');
+        return next(new BadRequest('Произошла ошибка валидации'));
       }
-      next(err);
+      return next(err);
     });
 };
 

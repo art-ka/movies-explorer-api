@@ -5,7 +5,7 @@ const {
   NotFound, BadRequest, Unauthorized, ConflictError,
 } = require('../errors');
 
-const { NODE_ENV, JWT_SECRET } = process.env;
+const { JWT_SECRET } = process.env;
 
 const getCurrentUser = (req, res, next) => {
   console.log(`Looking for user: ${req.user._id}`);
@@ -19,9 +19,9 @@ const getCurrentUser = (req, res, next) => {
     })
     .catch((err) => {
       if (err.name === 'CastError') {
-        throw new BadRequest('Произошла ошибка валидации');
+        return next(new BadRequest('Произошла ошибка валидации'));
       }
-      next(err);
+      return next(err);
     });
 };
 
@@ -52,7 +52,7 @@ const createUser = async (req, res, next) => {
     .then((user) => res.status(200).send(publicUser(user)))
     .catch((err) => {
       if (err.name === 'ValidationError') {
-        throw new BadRequest('Произошла ошибка валидации');
+        return next(new BadRequest('Произошла ошибка валидации'));
       }
       return next(err);
     });
@@ -77,7 +77,7 @@ const login = (req, res, next) => {
     .then((user) => {
       // аутентификация успешна! пользователь в переменной user
       // создадим токен
-      const token = jwt.sign({ _id: user._id }, NODE_ENV === 'production' ? JWT_SECRET : 'dev-secret', { expiresIn: '7d' });
+      const token = jwt.sign({ _id: user._id }, JWT_SECRET, { expiresIn: '7d' });
 
       // вернём токен
       res.send({ token });

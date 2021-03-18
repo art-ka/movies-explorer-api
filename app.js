@@ -12,7 +12,7 @@ require('dotenv').config();
 
 const errorHandler = require('./middlewares/errorHandler');
 
-const { PORT = 3000 } = process.env;
+const { DB_URL, PORT = 3000 } = process.env;
 
 const app = express();
 
@@ -35,7 +35,7 @@ app.use((req, res, next) => {
 
 app.use(cors());
 
-mongoose.connect('mongodb://localhost:27017/bitfilmsdb', {
+mongoose.connect(DB_URL, {
   useNewUrlParser: true,
   useCreateIndex: true,
   useFindAndModify: false,
@@ -67,6 +67,7 @@ app.post('/signin', celebrate({
   }).unknown(true),
 }), login);
 
+app.use(auth);
 app.use('/users/', auth, routerUser);
 app.use('/movies/', auth, routerMovie);
 
