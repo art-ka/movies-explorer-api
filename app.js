@@ -9,6 +9,7 @@ const { login, createUser } = require('./controllers/users');
 const auth = require('./middlewares/auth');
 const { requestLogger, errorLogger } = require('./middlewares/logger');
 require('dotenv').config();
+const { NotFound } = require('./errors');
 
 const errorHandler = require('./middlewares/errorHandler');
 
@@ -54,7 +55,7 @@ app.get('/crash-test', () => {
 
 app.post('/signup', celebrate({
   body: Joi.object().keys({
-    name: Joi.string().min(2).max(30),
+    name: Joi.string().required().min(2).max(30),
     email: Joi.string().required().email(),
     password: Joi.string().required().min(3),
   }).unknown(true),
@@ -71,16 +72,14 @@ app.use(auth);
 app.use('/users/', auth, routerUser);
 app.use('/movies/', auth, routerMovie);
 
+app.use((req, res, next) => {
+  next(new NotFound('Запрашиваемый ресурс не найден'));
+});
+
 app.use(errorLogger); // подключаем логгер ошибок
 
 app.use(errors()); // обработчик ошибок celebrate
 
 app.use(errorHandler);
-
-app.use((req, res, next) => {
-  res.status(404);
-  res.send({ message: 'Запрашиваемый ресурс не найден' });
-  next();
-});
 
 app.listen(PORT);
