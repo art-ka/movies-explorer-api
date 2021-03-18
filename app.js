@@ -1,4 +1,5 @@
 const express = require('express');
+const helmet = require('helmet');
 const mongoose = require('mongoose');
 const cors = require('cors');
 const { errors } = require('celebrate');
@@ -15,6 +16,7 @@ const errorHandler = require('./middlewares/errorHandler');
 const { DB_URL, PORT = 3000 } = process.env;
 
 const app = express();
+app.use(helmet());
 
 // Массив разешённых доменов
 const allowedCors = [
