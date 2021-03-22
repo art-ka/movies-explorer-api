@@ -11,14 +11,14 @@ const { requestLogger, errorLogger } = require('./middlewares/logger');
 require('dotenv').config();
 const { NotFound } = require('./errors');
 const limiter = require('./middlewares/limiter');
+const { DB_URL } = require('./config/config');
 
 const errorHandler = require('./middlewares/errorHandler');
 
-const { DB_URL, PORT = 3000 } = process.env;
+const { PORT = 3000 } = process.env;
 
 const app = express();
 app.use(helmet());
-app.use(limiter);
 
 // Массив разешённых доменов
 const allowedCors = [
@@ -49,6 +49,7 @@ mongoose.connect(DB_URL, {
 app.use(express.json());
 
 app.use(requestLogger); // подключаем логгер запросов
+app.use(limiter);
 
 app.get('/crash-test', () => {
   setTimeout(() => {
