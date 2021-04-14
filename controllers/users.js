@@ -5,8 +5,6 @@ const {
   NotFound, BadRequest, Unauthorized, ConflictError,
 } = require('../errors');
 
-const { JWT_SECRET } = process.env;
-
 const getCurrentUser = (req, res, next) => {
   console.log(`Looking for user: ${req.user._id}`);
   User.findById(req.user._id)
@@ -77,12 +75,14 @@ const login = (req, res, next) => {
     .then((user) => {
       // аутентификация успешна! пользователь в переменной user
       // создадим токен
+      const { JWT_SECRET } = process.env;
       const token = jwt.sign({ _id: user._id }, JWT_SECRET, { expiresIn: '7d' });
 
       // вернём токен
       res.send({ token });
     })
-    .catch(() => {
+    .catch((err) => {
+      console.error(err.message);
       next(new Unauthorized('Неправильный логин или пароль'));
     });
 };
