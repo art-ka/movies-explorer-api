@@ -22,8 +22,8 @@ app.use(helmet());
 
 // Массив разешённых доменов
 const allowedCors = [
-  'https://artmovies.students.nomoredomains.icu',
-  'http://www.artmovies.students.nomoredomains.icu',
+  'https://artmovie.students.nomoredomains.icu',
+  'http://www.artmovie.students.nomoredomains.icu',
   'localhost:3001',
 ];
 
