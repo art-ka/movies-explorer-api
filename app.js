@@ -1,3 +1,4 @@
+require('dotenv').config();
 const express = require('express');
 const helmet = require('helmet');
 const mongoose = require('mongoose');
@@ -8,7 +9,7 @@ const routes = require('./routes/index');
 const { login, createUser } = require('./controllers/users');
 const auth = require('./middlewares/auth');
 const { requestLogger, errorLogger } = require('./middlewares/logger');
-require('dotenv').config();
+
 const { NotFound } = require('./errors');
 const limiter = require('./middlewares/limiter');
 const { DB_URL } = require('./config/config');

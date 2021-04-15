@@ -4,16 +4,15 @@ const { Unauthorized } = require('../errors');
 const { NODE_ENV, JWT_SECRET } = process.env;
 
 module.exports = (req, res, next) => {
-  if (NODE_ENV !== 'production') {
-    req.user = { _id: '6050c31008b95d4cc812be14' };
-    return next();
-  }
-
   // достаём авторизационный заголовок
   const { authorization } = req.headers;
 
   // убеждаемся, что он есть и начинается с Bearer
   if (!authorization || !authorization.startsWith('Bearer ')) {
+    if (NODE_ENV !== 'production') {
+      req.user = { _id: '6050c31008b95d4cc812be14' };
+      return next();
+    }
     throw new Unauthorized('Необходима авторизация');
   }
   // извлечём токен
