@@ -8,7 +8,7 @@ module.exports = routerMovie;
 
 const validateMovieID = celebrate({
   params: Joi.object().keys({
-    movieId: Joi.string().required().length(24),
+    movieId: Joi.string().required(),
   }).unknown(true),
 });
 
@@ -19,8 +19,8 @@ routerMovie.get('/', getMovie);
 // country, director, duration, year, description, image, trailer, nameRU, nameEN и thumbnail
 routerMovie.post('/', celebrate({
   body: Joi.object().keys({
-    country: Joi.string().required().min(2).max(30),
-    director: Joi.string().required().min(2).max(30),
+    country: Joi.string().required().min(2).max(300),
+    director: Joi.string().required().min(2).max(300),
     duration: Joi.number().required(),
     year: Joi.string().required(),
     description: Joi.string().required(),
