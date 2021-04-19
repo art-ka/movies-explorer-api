@@ -19,7 +19,7 @@ routerMovie.get('/', getMovie);
 // country, director, duration, year, description, image, trailer, nameRU, nameEN и thumbnail
 routerMovie.post('/', celebrate({
   body: Joi.object().keys({
-    country: Joi.string().required().min(2).max(300),
+    country: Joi.string().min(2).max(300),
     director: Joi.string().required().min(2).max(300),
     duration: Joi.number().required(),
     year: Joi.string().required(),
